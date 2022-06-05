@@ -1,4 +1,4 @@
-# FRIENDS
+# FRIENDS+
 A complete end to end social media web app.
 
 https://murmuring-plateau-98800.herokuapp.com/

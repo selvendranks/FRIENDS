@@ -4,8 +4,8 @@ require('dotenv').config()
 console.log(process.env.SECRET)
 console.log(process.env.API_KEY)
 
-const port = process.env.PORT ;
-// const port = 5000;
+// const port = process.env.PORT ;
+const port = 5000;
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -17,8 +17,8 @@ const mongoSanitize = require('express-mongo-sanitize')
 const MongoStore = require("connect-mongo");
 
 // process.env.DB_URL
-const dbUrl  =  process.env.DB_URL;
-// const dbUrl = 'mongodb://localhost:27017/Friend';
+// const dbUrl  =  process.env.DB_URL;
+const dbUrl = 'mongodb://localhost:27017/Friend';
 
 const profile = require('./routes/profile');
 const post = require('./routes/post')

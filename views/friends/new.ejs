@@ -1,0 +1,50 @@
+<%layout('layouts/boilerplate') %>
+
+<h2 class="d-inline-block">Search for people : </h2>
+
+<form class="example" action="/friends/<%=profile._id%>/yourfriends/find" style="max-width: 40%;" novalidate class="validated">
+    <input type="text" placeholder="Search.." name="search">
+    <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+
+<iframe class="mt-5" frameborder="0" src="https://itch.io/embed/1245239?border_width=2&amp;border_color=ffffff" width="210" height="169"><a href="https://selvendran.itch.io/drag-zombie-survival">Zombie Survival by SELVENDRAN K</a></iframe>
+
+  <style>
+      * {
+  box-sizing: border-box;
+}
+
+/* Style the search field */
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+  </style>

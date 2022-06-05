@@ -1,0 +1,29 @@
+<%layout('layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <p class="h2">New Post</p>
+            <form action="/friends/<%= profile._id %>/post" method="POST" novalidate class="validated"
+                enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="formFileSm" class="form-label">Upload images</label>
+                    <input class="form-control form-control-sm" id="formFileSm" type="file" name="Post[image]" multiple>
+                </div>
+                <div class="mb-1 input-group-sm">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" name="Post[title]" required>
+                    <div class="invalid-feedback">
+                        Required
+                    </div>
+                </div>
+                <div class="mb-1 input-group-sm">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                        name="Post[description]"></textarea>
+                    <div class="invalid-feedback">
+                        Required
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success mb-2">Add post</button>
+            </form>
+        </div>
+    </div>

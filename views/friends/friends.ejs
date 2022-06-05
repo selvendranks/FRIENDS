@@ -1,0 +1,31 @@
+<%layout('layouts/boilerplate') %>
+
+<h2 class="d-inline-block">Friends: </h2>
+
+<ul>
+    <%for(let prof of friends ){%>
+    <div class="card m-2 d-inline-block" style="width: 17rem;"> 
+        <% let text = prof.image.url %>
+         <% let array = text.split("upload") %>
+        <% let image = array[0]+"upload/q_50" +array[1] %>  
+         <% console.log(image) %>  
+        <img src=<%= image %>  class="card-img-top" style='max-height: 350px' alt="...">
+        <div class="card-body">
+            <h4 class="card-title">
+                <%= prof.username %>
+            </h4>
+            <p class="card-text" style="font-size: large;"><b>Description : </b>
+                <%= prof.description %>
+            </p>
+            <p class="card-text" style="font-size: large;">
+            <form class="d-inline-block" action="/friends/<%= prof._id %>">
+            <button class="btn-sm btn-primary">View Profile</button>
+            </form>
+            <form class="d-inline-block"action="/friends/<%= prof._id %>/yourfriends/removeFriend">
+                <button class="btn-sm btn-danger">Remove Friend</button>
+            </form>
+            </p>
+        </div>
+    </div>
+    <% } %> 
+</ul>

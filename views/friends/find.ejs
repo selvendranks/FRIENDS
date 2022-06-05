@@ -1,0 +1,94 @@
+<%layout('layouts/boilerplate') %>
+
+<h2 class="d-inline-block">Search for people : </h2>
+
+<form class="example" action="/friends/<%=profile._id%>/yourfriends/find" style="max-width: 40%;" novalidate class="validated">
+    <input type="text" placeholder="Search.." name="search">
+    <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+
+
+     
+    <%for(let prof of profiles ){ if(prof.username!=currentUser.username){%>
+        <div class="card m-2 d-inline-block" style="width: 20rem; "> 
+          <% let text = prof.image.url %>
+         <% let array = text.split("upload") %>
+        <% let image = array[0]+"upload/q_50"+array[1] %>  
+         <% console.log(image) %> 
+            <img src=<%= image %>  class="card-img-top"  style='max-height: 350px' alt="...">
+            <div class="card-body">
+                <h4 class="card-title">
+                    <%= prof.username %>
+                </h4>
+                <p class="card-text" style="font-size: large;"><b>Description : </b>
+                    <%= prof.description %>
+                </p>
+                <%var i=0; for(request of prof.friendRequest) { if(currentUser.username == request) {i=1; break;} else{i=0}}%> 
+                <% var j=0; for(friend of prof.friends) { if(currentUser.username == friend) {j=1; break; } else{j=0}}%> 
+                
+                   <% if(prof.visibilty=='public' && j==1) {%> 
+                   <a href="/friends/<%= prof._id %>" class="btn btn-primary btn-sm">View Profile</a>
+                   <a href="/friends/<%= prof._id %>/yourfriends/removeFriend" class="btn btn-danger btn-sm">Remove Friend</a>
+                   <% } else if (prof.visibilty=='public' && i==1){ %> 
+                    <a href="/friends/<%= prof._id %>" class="btn btn-primary btn-sm">View Profile</a>
+                    <p>friend req sent</p>
+                    <% } else if(prof.visibilty=='private' && j==1) { %> 
+                      <a href="/friends/<%= prof._id %>" class="btn btn-primary btn-sm">View Profile</a>
+                      <a href="/friends/<%= prof._id %>/yourfriends/removeFriend" class="btn btn-danger btn-sm">Remove Friend</a>
+                    <% } else if (prof.visibilty=='private' && i==1){%>
+                      <p>friend req sent</p>
+                      <% } else if(prof.visibilty=='public'){ %>
+                        <a href="/friends/<%= prof._id %>" class="btn btn-primary btn-sm">View Profile</a>
+                        <a href="/friends/<%= prof._id %>/yourfriends/addFriend" class="btn btn-primary btn-sm">Add friend</a>
+                      <% }else if(prof.visibilty=='private'){ %> 
+                        <a href="/friends/<%= prof._id %>/yourfriends/addFriend" class="btn btn-primary btn-sm">Add friend</a>
+                        <% } %> 
+
+
+                    
+           
+            </div>
+        </div>
+     <%}}%>
+
+
+
+  <style>
+      * {
+  box-sizing: border-box;
+}
+
+/* Style the search field */
+form.example input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+  </style>

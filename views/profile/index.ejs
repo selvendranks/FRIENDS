@@ -240,6 +240,7 @@
                     commentItems = document.querySelectorAll("#deleteComment")
                     console.log(commentItems)
                     comment.querySelector('textarea').value = ""
+                    document.querySelector("#no-comments").remove()
                     deleteItems()
                 })
                     .catch((error) => {

@@ -172,7 +172,7 @@
 
                                                             <% } }} else{ %>
 
-                                                                <p class="card-text"> no comments yet </p>
+                                                                <p class="card-text" id="no-comments"> no comments yet </p>
                                                                 <% } %>
 
                                                 </div>
@@ -240,6 +240,7 @@
                     commentItems = document.querySelectorAll("#deleteComment")
                     console.log(commentItems)
                     comment.querySelector('textarea').value = ""
+                    document.querySelector("no-comments").remove()
                     deleteItems()
                 })
                     .catch((error) => {

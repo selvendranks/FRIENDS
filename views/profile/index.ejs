@@ -240,7 +240,12 @@
                     commentItems = document.querySelectorAll("#deleteComment")
                     console.log(commentItems)
                     comment.querySelector('textarea').value = ""
-                    document.querySelector("#no-comments").remove()
+                    if(post.reviews.length ==0){
+                        comment.parentElement.parentElement.querySelector("#commentList").querySelector('#no-comments').textContent = "no comments yet"
+                    }
+                    else{
+                        comment.parentElement.parentElement.querySelector("#commentList").querySelector('#no-comments').textContent = ""
+                    }
                     deleteItems()
                 })
                     .catch((error) => {

@@ -18,6 +18,6 @@ router.get('/addFriend',isloggedin,catchAsync(yourfriends.addPeople));
 router.get('/friendRequest',isloggedin,catchAsync(yourfriends.friendRequest));
 router.get('/decisions',isloggedin,catchAsync(yourfriends.decision));
 router.get('/removeFriend',isloggedin,catchAsync(yourfriends.removeFriends));
-router.get('/feeds',refreshPage,isloggedin,catchAsync(yourfriends.seefeeds));
+router.get('/feeds',isloggedin,catchAsync(yourfriends.seefeeds));
 
 module.exports = router;

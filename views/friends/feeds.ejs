@@ -38,10 +38,11 @@
                     </div>
 
                     <% if(profile.username !=currentUser.username){%>
-                        <a class="card-action" href="/friends/<%=profile.id %>/post/<%= post.id %>/like"
-                            style="text-decoration : none"><i class="fa fa-heart"></i>
-                            <%= post.likes.length %>
-                        </a>
+                        <span class="card-action" id="like" data-profile="<%=profile.id%>" 
+                            data-post="<%= post.id %>" style="text-decoration : none"><i
+                                class="fa fa-heart"></i>
+                            <span><%= post.likes.length %></span>
+                        </span>
                         <% } %>
                             <div class="card-body">
                                 <h5 class="card-title">

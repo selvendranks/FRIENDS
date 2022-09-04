@@ -25,11 +25,11 @@
                                 <div class="carousel-inner">
                                     <% post.image.forEach((img,i)=> { %>
                                         <div class="carousel-item <%= i===0 ? 'active' : '' %> ">
-                                            <% let text = img.url %>
-                                            <% let array = text.split("upload") %>
-                                           <% let image = array[0]+"upload/q_50"+array[1] %>  
-                                            <% console.log(image) %> 
-                                            <img src="<%= image %>" class="d-block w-100" alt="...">
+                                            <% let text=img.url %>
+                                                <% let array=text.split("upload") %>
+                                                    <% let image=array[0]+"upload/q_50"+array[1] %>
+                                                        <% console.log(image) %>
+                                                            <img src="<%= image %>" class="d-block w-100" alt="...">
                                         </div>
                                         <% }) %>
 
@@ -38,10 +38,11 @@
                     </div>
 
                     <% if(profile.username !=currentUser.username){%>
-                        <span class="card-action" id="like" data-profile="<%=profile.id%>" 
-                            data-post="<%= post.id %>" style="text-decoration : none"><i
-                                class="fa fa-heart"></i>
-                            <span><%= post.likes.length %></span>
+                        <span class="card-action" id="like" data-profile="<%=profile.id%>" data-post="<%= post.id %>"
+                            style="text-decoration : none"><i class="fa fa-heart"></i>
+                            <span>
+                                <%= post.likes.length %>
+                            </span>
                         </span>
                         <% } %>
                             <div class="card-body">
@@ -59,15 +60,20 @@
                                             <% }else {%>
 
                                                 <div>
-                                                    <form
+                                                    <form id="addComment"
                                                         action="/friends/<%=profile.id %>/post/<%= post.id %>/addComment"
+                                                        data-profile="<%=profile.id %>" data-post="<%= post.id %>"
                                                         method="post">
                                                         <label class="form-label" for="review">Add
                                                             Review:</label>
-                                                        <textarea class="form-control" name="review[body]" id="review"
+                                                        <textarea class="form-control mb-1" name="body" id="review"
                                                             cols="3" rows="2" required></textarea>
-                                                        <button class="btn-sm btn-secondary mt-1"><span style="font-size:medium ; position: relative; top: 3px;" class="material-symbols-outlined">
-                                                            comment
+                                                        <button class="btn-sm btn-secondary"
+                                                            data-profile="<%=profile.id %>"
+                                                            data-post="<%= post.id %>"><span
+                                                                style="font-size:medium ; position: relative; top: 3px;"
+                                                                class="material-symbols-outlined">
+                                                                comment
                                                             </span>
                                                             Comment</button>
                                                     </form>
@@ -87,18 +93,18 @@
 
                                                         <% } %>
                                     </li>
-                                    <div class="overflow-auto mt-4">
+                                    <div class="overflow-auto mt-4" id="commentList">
                                         <div class="mb-2" style="height: 180px">
                                             <% if(post.reviews.length>0){ %>
                                                 <%for(let review of post.reviews){ %>
 
-                                                    <p class="card-text"><b>
+                                                    <p><b>
                                                             <%= review.author %>
                                                         </b> : <%= review.body %>
                                                             <% if(review.author==currentUser.username) {%>
-                                                                <a class="material-symbols-outlined"
-                                                                    style="text-decoration: none;" id='delete'
-                                                                    href="/friends/<%= profile.id %>/post/<%= post.id %>/deletecomment/<%=review.id%>">delete_forever</a>
+                                                                <span class="material-symbols-outlined"
+                                                                    style="text-decoration: none;" id='deleteComment' data-profile="<%= profile.id %>" data-post="<%= post.id %>" data-review="<%=review.id%>"
+                                                                    >delete_forever</span>
                                                     </p>
 
                                                     <% } }} else{ %>
@@ -117,10 +123,13 @@
 
     <script>
         let likes = document.querySelectorAll("#like")
+        let comments = document.querySelectorAll("#addComment")
+        let commentItems = document.querySelectorAll("#deleteComment")
+
         for (let like of likes) {
 
             like.addEventListener('click', event => {
-
+                console.log(event.target)
                 fetch(`/friends/${like.dataset.profile}/post/${like.dataset.post}/like`)
 
                     .then((respose) => {
@@ -129,13 +138,57 @@
                         post = data
                         like.querySelector('span').textContent = post.likes.length
                     })
-        
-            })
 
-           
+            })
+        }
+
+        for (let comment of comments) {
+            comment.addEventListener('submit', event => {
+
+                event.preventDefault()
+                let data = { body: `${comment.querySelector('textarea').value}` }
+
+                console.log(`/friends/${comment.dataset.profile}/post/${comment.dataset.post}/addComment`)
+                fetch(`/friends/${comment.dataset.profile}/post/${comment.dataset.post}/addComment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                }).then((res) => {
+                    return res.json()
+                }).then((post) => {
+                     
+                    justComment = post.reviews[post.reviews.length -1]
+                    let lists = comment.parentElement.parentElement.querySelector("#commentList").querySelector('div')
+                    console.log(lists)
+                    console.log(post)
+                    const para = document.createElement('p');
+                    para.innerHTML = `<b>
+                                                            ${justComment.author}
+                                                        </b> : ${justComment.body}
+                                                            
+                                                                <a class="material-symbols-outlined" style="text-decoration: none;" id="delete" href="/friends/${comment.dataset.profile}/post/${comment.dataset.post}/deletecomment/${justComment._id}">delete_forever</a>
+                                                    `
+                    lists.append(para)
+
+
+                })
+                    .catch((error) => {
+                        console.log("failed to fetch")
+                    })
+
+
+
+
+
+            })
+        }
+
+
 
             // "/friends/profile.id/post/post.id/like"
-        }
+
     </script>
 
     <style>

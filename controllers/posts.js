@@ -6,6 +6,7 @@ const { post } = require('../routes/profile');
 const {cloudinary} = require('../cloudinary');
 
 
+
 module.exports.renderPost = async(req,res)=>{
     
     const {id} = req.params;
@@ -79,7 +80,10 @@ module.exports.addlike = async(req,res)=>{
 
 module.exports.addComment = async(req,res)=>{
     
-    const {body} = req.body.review;
+    const {body} = req.body;
+
+    console.log("************************************************************")
+    console.log(body)
     const {id,postid} = req.params;
   
 
@@ -88,18 +92,18 @@ module.exports.addComment = async(req,res)=>{
    
     
     // console.log(comment);
-
-    
-    res.redirect(req.session.refresh)
-    // res.send(profile);
+    res.json(post);
     // res.render('profile/index.ejs',{profile});
 
 }
 
 module.exports.deleteComment =  async(req,res)=>{
-
+    
+    console.log("########################################################3")
+    console.log(req.params)
     const {id,postid,reviewid} = req.params;
-    await Post.findOneAndUpdate({_id:postid},{$pull:{reviews:{_id:reviewid}}},{new:true});
+    let deleted = await Post.findOneAndUpdate({_id:postid},{$pull:{reviews:{_id:reviewid}}},{new:true});
+    console.log("updated sucessfully",deleted);
     res.redirect(req.session.refresh)
 
 }

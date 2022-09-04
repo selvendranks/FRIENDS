@@ -22,7 +22,7 @@ router.delete('/:postid',isloggedin,catchAsync(posts.deletePost));
 
 router.get('/:postid/like',catchAsync(posts.addlike));
 
-router.post('/:postid/addComment',isloggedin,catchAsync(posts.addComment));
+router.post('/:postid/addComment',catchAsync(posts.addComment));
 
-router.get('/:postid/deletecomment/:reviewid',isloggedin,catchAsync(posts.deleteComment));
+router.get('/:postid/deletecomment/:reviewid',catchAsync(posts.deleteComment));
 module.exports = router;

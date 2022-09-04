@@ -102,9 +102,9 @@
                                                             <%= review.author %>
                                                         </b> : <%= review.body %>
                                                             <% if(review.author==currentUser.username) {%>
-                                                                <span class="material-symbols-outlined"
+                                                                <a class="material-symbols-outlined"
                                                                     style="text-decoration: none;" id='deleteComment' data-profile="<%= profile.id %>" data-post="<%= post.id %>" data-review="<%=review.id%>"
-                                                                    >delete_forever</span>
+                                                                    >delete_forever</a>
                                                     </p>
 
                                                     <% } }} else{ %>
@@ -125,7 +125,7 @@
         let likes = document.querySelectorAll("#like")
         let comments = document.querySelectorAll("#addComment")
         let commentItems = document.querySelectorAll("#deleteComment")
-
+        deleteItems()
         for (let like of likes) {
 
             like.addEventListener('click', event => {
@@ -168,11 +168,13 @@
                                                             ${justComment.author}
                                                         </b> : ${justComment.body}
                                                             
-                                                                <a class="material-symbols-outlined" style="text-decoration: none;" id="delete" href="/friends/${comment.dataset.profile}/post/${comment.dataset.post}/deletecomment/${justComment._id}">delete_forever</a>
+                                                                <a class="material-symbols-outlined" style="text-decoration: none;" id="deleteComment" data-profile="${comment.dataset.profile}" data-post="${comment.dataset.post}" data-review="${justComment._id}">delete_forever</a>
                                                     `
                     lists.append(para)
-
-
+                    commentItems = document.querySelectorAll("#deleteComment")
+                    console.log(commentItems)
+                    comment.querySelector('textarea').value = ""
+                    deleteItems()
                 })
                     .catch((error) => {
                         console.log("failed to fetch")
@@ -182,9 +184,25 @@
 
 
 
+
             })
         }
-
+        
+  function deleteItems(){
+        for(let commentItem of commentItems){
+            console.log(commentItem)
+            commentItem.addEventListener('click',(event)=>{
+                fetch(`/friends/${commentItem.dataset.profile}/post/${commentItem.dataset.post}/deletecomment/${commentItem.dataset.review}`)
+            
+                .then((respose) => {
+                        return respose.json()
+                    }).then((data) => {
+                        console.log(data)
+                        commentItem.parentNode.remove()
+                    })
+            })
+        }
+    }
 
 
             // "/friends/profile.id/post/post.id/like"
@@ -221,13 +239,19 @@
             background-color: rgb(255, 0, 106);
         }
 
-        #delete {
+        #deleteComment {
             position: relative;
             top: 5px;
             font-size: 25px;
             font-weight: bold;
             color: red;
         }
+
+        #deleteComment:hover{
+             cursor: pointer;
+        }
+
+
 
 
         /*  Helper Styles */

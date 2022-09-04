@@ -13,7 +13,7 @@ router.use(methodOverride('_method'));
 const profile = require('../controllers/profile');  
 
 router.route('/')
-      .get(isloggedin,catchAsync(profile.index))
+      .get(isloggedin,refreshPage,catchAsync(profile.index))
       .post(isloggedin,upload.single('Profile[image]'),catchAsync(profile.addNewProfile));
       
 

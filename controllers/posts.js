@@ -31,6 +31,7 @@ module.exports.addPost = async(req,res)=>{
     req.flash('sucess','Sucessfully added your post');
     res.redirect(req.session.refresh)
 
+
 }
 
 module.exports.deletePost = async (req,res)=>{
@@ -58,6 +59,9 @@ module.exports.addlike = async(req,res)=>{
     console.log(post.likes);
     if(!post.likes.includes(req.user.username)){
         post.likes.push(req.user.username);
+    }
+    else{
+
     }
     await post.save();
     var profile = await Profile.findById(id).populate({
@@ -104,6 +108,7 @@ module.exports.deleteComment =  async(req,res)=>{
     const {id,postid,reviewid} = req.params;
     let deleted = await Post.findOneAndUpdate({_id:postid},{$pull:{reviews:{_id:reviewid}}},{new:true});
     console.log("updated sucessfully",deleted);
-    res.redirect(req.session.refresh)
+    // res.redirect(req.session.refresh)
+    res.json({"status":"done"});
 
 }

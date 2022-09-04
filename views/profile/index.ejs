@@ -94,10 +94,12 @@
                             </div>
 
                             <% if(profile.username !=currentUser.username){%>
-                                <span class="card-action" id="like" data-profile="<%=profile.id%>" 
+                                <span class="card-action" id="like" data-profile="<%=profile.id%>"
                                     data-post="<%= post.id %>" style="text-decoration : none"><i
                                         class="fa fa-heart"></i>
-                                    <span><%= post.likes.length %></span>
+                                    <span>
+                                        <%= post.likes.length %>
+                                    </span>
                                 </span>
                                 <% } %>
                                     <div class="card-body">
@@ -115,20 +117,25 @@
                                                     <% }else {%>
 
                                                         <div>
-                                                            <form
+
+                                                            <form id="addComment"
                                                                 action="/friends/<%=profile.id %>/post/<%= post.id %>/addComment"
-                                                                method="post">
+                                                                data-profile="<%=profile.id %>"
+                                                                data-post="<%= post.id %>" method="post">
                                                                 <label class="form-label" for="review">Add
                                                                     Review:</label>
-                                                                <textarea class="form-control" name="review[body]"
+                                                                <textarea class="form-control mb-1" name="body"
                                                                     id="review" cols="3" rows="2" required></textarea>
-                                                                <button class="btn-sm btn-secondary mt-1"><span
+                                                                <button class="btn-sm btn-secondary"
+                                                                    data-profile="<%=profile.id %>"
+                                                                    data-post="<%= post.id %>"><span
                                                                         style="font-size:medium ; position: relative; top: 3px;"
                                                                         class="material-symbols-outlined">
                                                                         comment
                                                                     </span>
                                                                     Comment</button>
                                                             </form>
+
                                                         </div>
                                                         <% } %>
 
@@ -146,7 +153,7 @@
 
                                                                 <% } %>
                                             </li>
-                                            <div class="overflow-auto mt-4">
+                                            <div class="overflow-auto mt-4" id="commentList">
                                                 <div class="mb-2" style="height: 180px">
                                                     <% if(post.reviews.length>0){ %>
                                                         <%for(let review of post.reviews){ %>
@@ -156,8 +163,11 @@
                                                                 </b> : <%= review.body %>
                                                                     <% if(review.author==currentUser.username) {%>
                                                                         <a class="material-symbols-outlined"
-                                                                            style="text-decoration: none;" id='delete'
-                                                                            href="/friends/<%= profile.id %>/post/<%= post.id %>/deletecomment/<%=review.id%>">delete_forever</a>
+                                                                            style="text-decoration: none;"
+                                                                            id='deleteComment'
+                                                                            data-profile="<%= profile.id %>"
+                                                                            data-post="<%= post.id %>"
+                                                                            data-review="<%=review.id%>">delete_forever</a>
                                                             </p>
 
                                                             <% } }} else{ %>
@@ -179,10 +189,13 @@
 
     <script>
         let likes = document.querySelectorAll("#like")
+        let comments = document.querySelectorAll("#addComment")
+        let commentItems = document.querySelectorAll("#deleteComment")
+        deleteItems()
         for (let like of likes) {
 
             like.addEventListener('click', event => {
-
+                console.log(event.target)
                 fetch(`/friends/${like.dataset.profile}/post/${like.dataset.post}/like`)
 
                     .then((respose) => {
@@ -191,13 +204,75 @@
                         post = data
                         like.querySelector('span').textContent = post.likes.length
                     })
-        
-            })
 
-           
+            })
+        }
+
+        for (let comment of comments) {
+            comment.addEventListener('submit', event => {
+
+                event.preventDefault()
+                let data = { body: `${comment.querySelector('textarea').value}` }
+
+                console.log(`/friends/${comment.dataset.profile}/post/${comment.dataset.post}/addComment`)
+                fetch(`/friends/${comment.dataset.profile}/post/${comment.dataset.post}/addComment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                }).then((res) => {
+                    return res.json()
+                }).then((post) => {
+
+                    justComment = post.reviews[post.reviews.length - 1]
+                    let lists = comment.parentElement.parentElement.querySelector("#commentList").querySelector('div')
+                    console.log(lists)
+                    console.log(post)
+                    const para = document.createElement('p');
+                    para.innerHTML = `<b>
+                                                            ${justComment.author}
+                                                        </b> : ${justComment.body}
+                                                            
+                                                                <a class="material-symbols-outlined" style="text-decoration: none;" id="deleteComment" data-profile="${comment.dataset.profile}" data-post="${comment.dataset.post}" data-review="${justComment._id}">delete_forever</a>
+                                                    `
+                    lists.append(para)
+                    commentItems = document.querySelectorAll("#deleteComment")
+                    console.log(commentItems)
+                    comment.querySelector('textarea').value = ""
+                    deleteItems()
+                })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+
+
+
+
+
+
+            })
+        }
+
+        function deleteItems() {
+            for (let commentItem of commentItems) {
+                console.log(commentItem)
+                commentItem.addEventListener('click', (event) => {
+                    fetch(`/friends/${commentItem.dataset.profile}/post/${commentItem.dataset.post}/deletecomment/${commentItem.dataset.review}`)
+
+                        .then((respose) => {
+                            return respose.json()
+                        }).then((data) => {
+                            console.log(data)
+                            commentItem.parentNode.remove()
+                        })
+                })
+            }
+        }
+
 
             // "/friends/profile.id/post/post.id/like"
-        }
+
     </script>
 
     <style>
@@ -230,13 +305,18 @@
             background-color: rgb(255, 0, 106);
         }
 
-        #delete {
+        #deleteComment {
             position: relative;
             top: 5px;
             font-size: 25px;
             font-weight: bold;
             color: red;
         }
+
+        #deleteComment:hover{
+             cursor: pointer;
+        }
+
 
 
         /*  Helper Styles */

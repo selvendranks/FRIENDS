@@ -58,7 +58,7 @@
 
                 <div class="mb-1 input-group-sm">
                     <label class="form-label"><b>Date of Birth :</b></label>
-                    <input type="date" class="form-control" name="Profile[dateOfBirth]" required>
+                    <input type="date" class="form-control" min="<%= new Date().toJSON().slice(0,10).replace(/-/g,'-') %> " name="Profile[dateOfBirth]" required>
                     <div class="invalid-feedback">
                         Required
                     </div>

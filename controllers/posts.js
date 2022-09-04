@@ -51,15 +51,14 @@ module.exports.deletePost = async (req,res)=>{
 
 module.exports.addlike = async(req,res)=>{
     
-   
+    
     const {id,postid} = req.params;
     const post = await Post.findById(postid);
     console.log(post.likes);
     if(!post.likes.includes(req.user.username)){
         post.likes.push(req.user.username);
     }
-    post.save();
-    // res.send(post);
+    await post.save();
     var profile = await Profile.findById(id).populate({
         path :'posts',
         populate:{
@@ -70,8 +69,10 @@ module.exports.addlike = async(req,res)=>{
         }
     }).populate('author');
 
+   
     // res.render('profile/index.ejs',{profile});
-    res.redirect(req.session.refresh)
+    // res.redirect(req.session.refresh)
+    res.json(post)
     
     
 }

@@ -114,6 +114,28 @@
                     <% } %>
     </div>
 
+    <script>
+        let likes = document.querySelectorAll("#like")
+        for (let like of likes) {
+
+            like.addEventListener('click', event => {
+
+                fetch(`/friends/${like.dataset.profile}/post/${like.dataset.post}/like`)
+
+                    .then((respose) => {
+                        return respose.json()
+                    }).then((data) => {
+                        post = data
+                        like.querySelector('span').textContent = post.likes.length
+                    })
+        
+            })
+
+           
+
+            // "/friends/profile.id/post/post.id/like"
+        }
+    </script>
 
     <style>
         @media (min-width:200px) {

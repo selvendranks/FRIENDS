@@ -105,6 +105,7 @@
                                                                 <a class="material-symbols-outlined"
                                                                     style="text-decoration: none;" id='deleteComment' data-profile="<%= profile.id %>" data-post="<%= post.id %>" data-review="<%=review.id%>"
                                                                     >delete_forever</a>
+                                                                
                                                     </p>
 
                                                     <% } }} else{ %>
@@ -174,12 +175,18 @@
                     commentItems = document.querySelectorAll("#deleteComment")
                     console.log(commentItems)
                     comment.querySelector('textarea').value = ""
+                 
+                try{
                     if(post.reviews.length ==0){
                         comment.parentElement.parentElement.querySelector("#commentList").querySelector('#no-comments').textContent = "no comments yet"
                     }
                     else{
                         comment.parentElement.parentElement.querySelector("#commentList").querySelector('#no-comments').textContent = ""
                     }
+                }
+                catch(e){
+                    console.log(e);
+                }
 
                     deleteItems()
                 })

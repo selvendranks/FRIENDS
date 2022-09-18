@@ -148,6 +148,7 @@
 
                 event.preventDefault()
                 let data = { body: `${comment.querySelector('textarea').value}` }
+                comment.querySelector('span').classList.add('addCommentNow');
 
                 console.log(`/friends/${comment.dataset.profile}/post/${comment.dataset.post}/addComment`)
                 fetch(`/friends/${comment.dataset.profile}/post/${comment.dataset.post}/addComment`, {
@@ -171,6 +172,7 @@
                                                             
                                                                 <a class="material-symbols-outlined" style="text-decoration: none;" id="deleteComment" data-profile="${comment.dataset.profile}" data-post="${comment.dataset.post}" data-review="${justComment._id}">delete_forever</a>
                                                     `
+                    comment.querySelector('span').classList.remove('addCommentNow');
                     lists.append(para)
                     commentItems = document.querySelectorAll("#deleteComment")
                     console.log(commentItems)
@@ -206,6 +208,7 @@
         for(let commentItem of commentItems){
             console.log(commentItem)
             commentItem.addEventListener('click',(event)=>{
+                commentItem.classList.add('deleteCommentNow')
                 fetch(`/friends/${commentItem.dataset.profile}/post/${commentItem.dataset.post}/deletecomment/${commentItem.dataset.review}`)
             
                 .then((respose) => {
@@ -265,7 +268,23 @@
              cursor: pointer;
         }
 
+        .deleteCommentNow{
+            -webkit-animation: spin 1.3s linear infinite;
+        }
 
+        .addCommentNow{
+            -webkit-animation: spin 1.3s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
         /*  Helper Styles */

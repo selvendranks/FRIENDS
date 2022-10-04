@@ -39,7 +39,9 @@
                 <p>User already? <a href="/login">Login</a></p>
 
             </form>
-            <button class="btn btn-success mt-1" id="sendOTP">Register</button>
+            <button class="btn btn-success mt-1" id="sendOTP"><span class="material-symbols-outlined" id="registerIcon" style=" position: relative; top: 0.3rem;">
+                how_to_reg
+                </span>Register</button>
 
             <form action="/verifyEmail" method="post" class="validated" id="otpForm">
                 <div class="mb-1 input-group-sm">
@@ -61,6 +63,8 @@
         const Alert = document.querySelector('#alert-success');
         const AlertWar = document.querySelector('#alert-danger');
         const registerButton = document.querySelector('#sendOTP');
+        const registerIcon = document.querySelector("#registerIcon");
+
         let otpForm = document.querySelector('#otpForm');
         otpForm.style.display = 'none';
         AlertWar.style.display = 'none';
@@ -69,11 +73,8 @@
 
         registerButton.addEventListener('click', () => {
 
-            otpForm.style.display = 'block';
-            registerForm.style.display = 'none';
-            Alert.style.display = 'block'
-            registerButton.style.display = 'none'
 
+            registerIcon.classList.add("registerIcon");
             let data = { body: `${document.querySelector('#email').value}` }
             fetch(`/generateOtp`, {
                 method: 'POST',
@@ -84,6 +85,12 @@
             }).then((res) => {
                 return res.json()
             }).then((post) => {
+                
+                registerIcon.classList.remove("registerIcon");
+                otpForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                Alert.style.display = 'block'
+                registerButton.style.display = 'none'
 
                 console.log("listening")
                 otpForm.addEventListener('submit', (event) => {
@@ -103,7 +110,7 @@
                         if (post.verified == 'true') {
                             document.register.submit();
                         }
-                        else{
+                        else {
                             AlertWar.style.display = 'block';
                         }
                     })
@@ -111,8 +118,25 @@
                 })
             })
 
-        
+
         })
 
 
     </script>
+
+<style>
+
+    .registerIcon{
+                -webkit-animation: spin 1.3s linear infinite;
+            }
+    
+            @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    </style>

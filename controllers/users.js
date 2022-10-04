@@ -94,11 +94,13 @@ module.exports.generateOtptoRegister = async(req,res)=>{
         if(err)
           console.log(err)
         else
-          console.log(info);
+          {
+            res.cookie('Otp', `${otp}`, { signed: true }) 
+            res.json({'Otp':`:|`});
+          }
      });
      
-     res.cookie('Otp', `${otp}`, { signed: true }) 
-     res.json({'Otp':`:|`});
+    
 
 }
 

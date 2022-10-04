@@ -133,7 +133,7 @@ module.exports.generateOtp = async(req,res)=>{
       to: `${body}`,   // list of receivers
       subject: 'Reset Password OTL',
       text: 'your Link',
-      html: `<a href='http://murmuring-plateau-98800.herokuapp.com/${randomOtp}'>Reset Your password</a>. please dont share the link with anyone`
+      html: `<a href='http://https://murmuring-plateau-98800.herokuapp.com/forgotPassword/${randomOtp}'>Reset Your password</a>. please dont share the link with anyone`
              
     };
 

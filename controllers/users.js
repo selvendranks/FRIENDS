@@ -68,21 +68,20 @@ module.exports.verifyMail = async(req,res)=>{
 
 module.exports.generateOtptoRegister = async(req,res)=>{
   const {body} = req.body;
-
   let otp = Math.floor((Math.random() * 1000000) );
   const transporter = nodemailer.createTransport({
     port: 465, // true for 465, false for other ports
     host: "smtp.gmail.com",
     auth: {
-      user: "selvendranks@gmail.com",
-      pass: "ognymypcoakresym",
+      user: procss.env.EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
     },
     secure: true,
   });
 
 
   const mailData = {
-    from: 'selvendranks@gmail.com',  // sender address
+    from: process.env.EMAIL,  // sender address
       to: `${body}`,   // list of receivers
       subject: 'Email verification otp',
       text: 'your otp',
@@ -99,6 +98,7 @@ module.exports.generateOtptoRegister = async(req,res)=>{
             res.json({'Otp':`:|`});
           }
      });
+   
      
     
 
@@ -123,15 +123,15 @@ module.exports.generateOtp = async(req,res)=>{
     port: 465, // true for 465, false for other ports
     host: "smtp.gmail.com",
     auth: {
-      user: "selvendranks@gmail.com",
-      pass: "ognymypcoakresym",
+      user: procss.env.EMAIL ,
+      pass: process.env.EMAIL_PASSWORD,
     },
     secure: true,
   });
 
 
   const mailData = {
-    from: 'selvendranks@gmail.com',  // sender address
+    from: process.env.EMAIL,  // sender address
       to: `${body}`,   // list of receivers
       subject: 'Reset Password OTL',
       text: 'your Link',

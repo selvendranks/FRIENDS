@@ -92,7 +92,7 @@ module.exports.generateOtptoRegister = async(req,res)=>{
 
     transporter.sendMail(mailData, function (err, info) {
         if(err)
-          console.log(err)
+          throw new Error("Problem sending mail")
         else
           {
             res.cookie('Otp', `${otp}`, { signed: true }) 

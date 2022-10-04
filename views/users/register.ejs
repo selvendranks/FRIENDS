@@ -53,7 +53,9 @@
                         something is'nt right
                     </div>
                 </div>
-                <button class="btn btn-primary mt-1">Verify Otp</button>
+                <button class="btn btn-primary mt-1"><span class="material-symbols-outlined" style=" position: relative; top: 0.3rem;" id="checkIcon">
+                    task_alt
+                    </span>Verify Otp</button>
             </form>
         </div>
     </div>
@@ -64,6 +66,7 @@
         const AlertWar = document.querySelector('#alert-danger');
         const registerButton = document.querySelector('#sendOTP');
         const registerIcon = document.querySelector("#registerIcon");
+        const checkIcon = document.querySelector("#checkIcon");
 
         let otpForm = document.querySelector('#otpForm');
         otpForm.style.display = 'none';
@@ -95,6 +98,7 @@
                 console.log("listening")
                 otpForm.addEventListener('submit', (event) => {
                     event.preventDefault()
+                    checkIcon.classList.add("checkIcon");
                     console.log("listened")
                     let data = { body: `${document.querySelector('#otp').value}` }
 
@@ -111,6 +115,8 @@
                             document.register.submit();
                         }
                         else {
+                            document.querySelector('#otp').value = "";
+                            checkIcon.classList.remove('checkIcon');
                             AlertWar.style.display = 'block';
                         }
                     })
@@ -126,7 +132,7 @@
 
 <style>
 
-    .registerIcon{
+    .registerIcon,.checkIcon{
                 -webkit-animation: spin 1.3s linear infinite;
             }
     

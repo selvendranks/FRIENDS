@@ -84,7 +84,7 @@ module.exports.generateOtptoRegister = async(req,res)=>{
   const mailData = {
     from: 'selvendranks@gmail.com',  // sender address
       to: `${body}`,   // list of receivers
-      subject: 'your changing password otp',
+      subject: 'Email verification otp',
       text: 'your otp',
       html: `your OTP : ${otp}. please dont share with anyone`
              

@@ -1,59 +1,197 @@
-const User = require('../models/user');
-const Room = require('../models/profile');
-const Profile = require('../models/profile');
+const User = require("../models/user");
+const Room = require("../models/profile");
+const Profile = require("../models/profile");
+const nodemailer = require("nodemailer");
+var crypto = require("crypto");
 
-module.exports.renderRegisterForm = (req,res)=>{
-    res.render('users/register');
+
+module.exports.renderRegisterForm = (req, res) => {
+  res.render("users/register");
+};
+
+module.exports.registerUser = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    const user = new User({ username, email });
+    const registeredUser = await User.register(user, password);
+    req.login(registeredUser, (err) => {
+      if (err) return next(err);
+      // req.flash('sucess',"Welcome to yelpcamp");
+      // res.redirect('/room');
+    });
+    req.flash("sucess", "Welcome to Friends+");
+    res.redirect("/friends/new");
+  } catch (e) {
+    req.flash("error", e.message);
+    res.redirect("/register");
+  }
+};
+
+module.exports.renderLoginForm = async (req, res) => {
+  res.render("users/login");
+};
+
+module.exports.loginUser = async (req, res) => {
+  req.flash("sucess", "Welcome back");
+  const profile = await Profile.findOne({ username: req.user.username });
+  // res.redirect('/friends/new');
+
+  // res.render('profile/index.ejs',{profile});
+  try {
+    res.redirect(`/friends/${profile._id}`);
+  } catch (e) {
+    res.redirect("/friends/new");
+  }
+};
+
+module.exports.logoutUser = (req, res) => {
+  req.logOut();
+  req.flash("sucess", "sucessfully logged out");
+  res.redirect("/");
+};
+
+module.exports.renderForgotPasswordForm = (req, res) => {
+
+  res.render("users/forgotPasswordForm");
+};
+
+module.exports.verifyMail = async(req,res)=>{
+
+  const {body} = req.body;
+  if(req.signedCookies.Otp === body){
+     res.json({"verified":"true"})
+  }
+  else{
+    res.json({"verified":"false"})
+  }
 }
 
-module.exports.registerUser = async (req,res)=>{
-    try{
-      const {username,email,password} = req.body;
-      const user = new User({username , email});
-      const registeredUser = await User.register(user,password);
-      req.login(registeredUser,err=>{
-          if(err) return next(err);
-          // req.flash('sucess',"Welcome to yelpcamp");
-          // res.redirect('/room');
-      })
-      req.flash('sucess',"Welcome to Friends+");
-      res.redirect('/friends/new');
-    }
-    catch(e){
-        req.flash('error',e.message);
-        res.redirect('/register');
-    }
+module.exports.generateOtptoRegister = async(req,res)=>{
+  const {body} = req.body;
+
+  let otp = Math.floor((Math.random() * 1000000) );
+  const transporter = nodemailer.createTransport({
+    port: 465, // true for 465, false for other ports
+    host: "smtp.gmail.com",
+    auth: {
+      user: "selvendranks@gmail.com",
+      pass: "ognymypcoakresym",
+    },
+    secure: true,
+  });
+
+
+  const mailData = {
+    from: 'selvendranks@gmail.com',  // sender address
+      to: `${body}`,   // list of receivers
+      subject: 'your changing password otp',
+      text: 'your otp',
+      html: `your OTP : ${otp}. please dont share with anyone`
+             
+    };
+
+    transporter.sendMail(mailData, function (err, info) {
+        if(err)
+          console.log(err)
+        else
+          console.log(info);
+     });
      
+     res.cookie('Otp', `${otp}`, { signed: true }) 
+     res.json({'Otp':`:|`});
+
+}
+
+module.exports.generateOtp = async(req,res)=>{
+
+  console.log("**************************************");
+  const {body} = req.body;
+  const user = await User.findOne({email: body});
+
+  if(!user){
+    res.json({"message": "Sorry your email is not registered !!"});
   }
 
-  module.exports.renderLoginForm = async(req,res)=>{
-    res.render('users/login');
+  const randomOtp = crypto.randomBytes(20).toString('hex');
+  const data = await User.updateOne({email:body},{$set:{token:randomOtp}})
+  console.log(data)
+
+
+  const transporter = nodemailer.createTransport({
+    port: 465, // true for 465, false for other ports
+    host: "smtp.gmail.com",
+    auth: {
+      user: "selvendranks@gmail.com",
+      pass: "ognymypcoakresym",
+    },
+    secure: true,
+  });
+
+
+  const mailData = {
+    from: 'selvendranks@gmail.com',  // sender address
+      to: `${body}`,   // list of receivers
+      subject: 'Reset Password OTL',
+      text: 'your Link',
+      html: `<a href='http://murmuring-plateau-98800.herokuapp.com/${randomOtp}'>Reset Your password</a>. please dont share the link with anyone`
+             
+    };
+
+    transporter.sendMail(mailData, function (err, info) {
+        if(err)
+          console.log("###################################")
+        else
+         res.json({"message":"it worked"});
+     });
+
+  
 }
 
-module.exports.loginUser = async(req,res)=>{
-    req.flash("sucess","Welcome back");
-    const profile = await Profile.findOne({username : req.user.username});
-    // res.redirect('/friends/new');
+module.exports.renderChangePasswordForm = async(req,res)=>{
+
+  const user = await User.findOne({token: `${req.params.id}`});
+  if(!user){
+    throw new Error("Something went wrong , try sending Mail verification again");
+  }
+  else{
+    res.render('users/changePasswordForm',{token:user.token})
+
+  }
+
+
+}
+
+module.exports.resetPassword = async(req,res) =>{
+  
+  let message = ""
+  const {password,username} = req.body;
+  const user = await User.findOne({token: `${req.params.id}`});
+  if(!user){
+    throw new Error("Something went wrong , try sending Mail verification again");
+  }
+  else{
+
+    user.setPassword(password,async function(){
+      await user.save();
+    })
     
-    // res.render('profile/index.ejs',{profile});
-    try{
-    res.redirect(`/friends/${profile._id}`);
+    if(username){
+      await User.updateOne({email:user.email},{$set:{username:username}})
+      message = "and username";
+      await Profile.updateOne({email:user.email},{$set:{username:username}})
     }
-    catch(e){
-    res.redirect('/friends/new')
-    }
-}
 
-module.exports.logoutUser = (req,res)=>{
-    req.logOut();
-    req.flash('sucess','sucessfully logged out');
-    res.redirect('/');
-}
 
-module.exports.renderOtp = async(req,res)=>{
+     
+    await User.updateOne({token:req.params.id},{$set:{token:'none'}});
+    req.flash("sucess", `you have sucessfully updated password ${message}`);
     
-    res.render('users/otp.ejs');
-    
+    req.session.save(function(err) {
+      // session saved
+      console.log('session saved');
+      res.redirect('/login');
+    });
+
+  }
 
 }
-

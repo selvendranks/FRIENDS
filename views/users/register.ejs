@@ -1,8 +1,18 @@
 <%layout('layouts/boilerplate')%>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-success" style="display: none;">
+        <strong>OTP sent to your mail</strong> please verify to register.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-danger" style="display: none;">
+        <strong>Invalid OTP</strong> Please enter the valid otp sent to your email.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
     <h1>Register</h1>
     <div class="row">
         <div class="col-md-6">
-            <form action="/register" method="post" class="validated" novalidate>
+            <form action="/register" method="post" name="register" class="validated" id="registerForm">
                 <div class="mb-1 input-group-sm">
                     <label class="form-label">UserName</label>
                     <input type="text" class="form-control" name="username" required>
@@ -12,7 +22,7 @@
                 </div>
                 <div class="mb-1 input-group-sm">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" required>
+                    <input type="email" class="form-control" name="email" id="email" required>
                     <div class="invalid-feedback">
                         Required
                     </div>
@@ -25,12 +35,84 @@
                     </div>
                 </div>
 
-                <button class="btn btn-success mt-1">Register</button>
-                <p>User already?  <a href="/login">Login</a></p>
+
+                <p>User already? <a href="/login">Login</a></p>
+
+            </form>
+            <button class="btn btn-success mt-1" id="sendOTP">Register</button>
+
+            <form action="/verifyEmail" method="post" class="validated" id="otpForm">
+                <div class="mb-1 input-group-sm">
+                    <label class="form-label">
+                        Enter the OTP
+                    </label>
+                    <input type="text" class="form-control" name="otp" id="otp" required>
+                    <div class="invalid-feedback">
+                        something is'nt right
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-1">Verify Otp</button>
             </form>
         </div>
     </div>
 
-<script>
+    <script>
+        const registerForm = document.querySelector('#registerForm');
+        const Alert = document.querySelector('#alert-success');
+        const AlertWar = document.querySelector('#alert-danger');
+        const registerButton = document.querySelector('#sendOTP');
+        let otpForm = document.querySelector('#otpForm');
+        otpForm.style.display = 'none';
+        AlertWar.style.display = 'none';
 
-</script>
+        let OTP = ''
+
+        registerButton.addEventListener('click', () => {
+
+            otpForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            Alert.style.display = 'block'
+            registerButton.style.display = 'none'
+
+            let data = { body: `${document.querySelector('#email').value}` }
+            fetch(`/generateOtp`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).then((res) => {
+                return res.json()
+            }).then((post) => {
+
+                console.log("listening")
+                otpForm.addEventListener('submit', (event) => {
+                    event.preventDefault()
+                    console.log("listened")
+                    let data = { body: `${document.querySelector('#otp').value}` }
+
+                    fetch(`/verifyEmail`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    }).then((res) => {
+                        return res.json()
+                    }).then((post) => {
+                        if (post.verified == 'true') {
+                            document.register.submit();
+                        }
+                        else{
+                            AlertWar.style.display = 'block';
+                        }
+                    })
+
+                })
+            })
+
+        
+        })
+
+
+    </script>

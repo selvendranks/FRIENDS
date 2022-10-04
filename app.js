@@ -4,8 +4,8 @@ require('dotenv').config()
 console.log(process.env.SECRET)
 console.log(process.env.API_KEY)
 
-const port = process.env.PORT ;
-// const port = 5000;
+// const port = process.env.PORT ;
+const port = 5000;
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -17,8 +17,8 @@ const mongoSanitize = require('express-mongo-sanitize')
 const MongoStore = require("connect-mongo");
 
 // process.env.DB_URL
-const dbUrl  =  process.env.DB_URL;
-// const dbUrl = 'mongodb://localhost:27017/Friend';
+// const dbUrl  =  process.env.DB_URL;
+const dbUrl = 'mongodb://localhost:27017/Friend';
 
 const profile = require('./routes/profile');
 const post = require('./routes/post')
@@ -31,6 +31,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 
 const app = express();
+const cookieParser = require('cookie-parser');
 app.use(express.static('public'));
 app.use(express.json())
 
@@ -41,7 +42,7 @@ app.use(methodOverride('_method'));
 
 const secrets = process.env.SECRET ;
 // const secrets = "good secret";
-
+// const sessionConfig = {secret: 'secreti'}
 const sessionConfig = { 
     name: 'session',
     secret : secrets,
@@ -59,6 +60,8 @@ const sessionConfig = {
     })
 }
 app.use(session(sessionConfig));
+
+app.use(cookieParser(secrets));
 app.use(flash());
 
 app.use(passport.initialize());

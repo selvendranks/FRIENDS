@@ -12,7 +12,12 @@ const UserSchema = new Schema({
         type:String,
         required:true,
         unique:true
+    },
+    token:{
+        type:String,
+        default : 'none'
     }
+
 });
 
 UserSchema.plugin(passportLocalMongoose);

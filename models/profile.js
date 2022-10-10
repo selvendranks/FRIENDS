@@ -26,6 +26,7 @@ const profileSchema = new Shema({
     image:{
         url:String,
         filename:String
+       
     },
    
     visibilty:{

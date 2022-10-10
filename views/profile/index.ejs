@@ -12,11 +12,8 @@
                     <div class="col-md-6 offset-md-3">
 
                         <div class="card m-2 d-inline-block">
-                            <% let text=profile.image.url %>
-                                <% let array=text.split("upload") %>
-                                    <% let image=array[0]+"upload/q_50"+array[1] %>
-                                        <% console.log(image) %>
-                                            <img src="<%= image %> " alt="" class="card-img-top">
+                            
+                                            <img src="<%= profile.image.url %> " alt="" class="card-img-top">
 
                                             <div class="card-body">
                                                 <h4 class="card-title">

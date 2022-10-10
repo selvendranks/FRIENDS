@@ -56,7 +56,22 @@ module.exports.addNewProfile = async (req, res) => {
   const profile = new Profile(req.body.Profile);
   profile.username = req.user.username;
   profile.email = req.user.email;
-  profile.image.url = req.file.path;
+  let result = await cloudinary.api.resources();
+
+  let percent =0;
+       
+  result = result.resources.find((item) => item.secure_url === req.file.path)
+  let dimension = +result.bytes
+  // res.send(`${dimension}`)
+ if(dimension>150000)
+    percent = (100/(dimension/150000)).toFixed(0)
+  else percent = 99;
+  
+  let array = req.file.path.split('upload');
+  image=array[0]+`upload/q_${percent}`+array[1]
+
+
+  profile.image.url = image;
   profile.image.filename = req.file.filename;
 
   const saved = await profile.save();

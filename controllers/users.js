@@ -3,6 +3,7 @@ const Room = require("../models/profile");
 const Profile = require("../models/profile");
 const nodemailer = require("nodemailer");
 var crypto = require("crypto");
+const { cloudinary } = require("../cloudinary");
 
 
 module.exports.renderRegisterForm = (req, res) => {
@@ -82,7 +83,7 @@ module.exports.generateOtptoRegister = async(req,res)=>{
 
 
   const mailData = {
-    from: 'process.env.EMAIL',  // sender address
+    from: process.env.EMAIL,  // sender address
       to: `${body}`,   // list of receivers
       subject: 'Email verification otp',
       text: 'your otp',
@@ -131,7 +132,7 @@ module.exports.generateOtp = async(req,res)=>{
 
 
   const mailData = {
-    from: 'process.env.EMAIL',  // sender address
+    from: process.env.EMAIL,  // sender address
       to: `${body}`,   // list of receivers
       subject: 'Reset Password OTL',
       text: 'your Link',
@@ -197,3 +198,6 @@ module.exports.resetPassword = async(req,res) =>{
   }
 
 }
+
+
+

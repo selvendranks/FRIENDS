@@ -14,7 +14,6 @@ const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const mongoSanitize = require('express-mongo-sanitize')
-
 const MongoStore = require("connect-mongo");
 
 // process.env.DB_URL

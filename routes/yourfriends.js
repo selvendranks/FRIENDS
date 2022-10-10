@@ -19,5 +19,6 @@ router.get('/friendRequest',isloggedin,catchAsync(yourfriends.friendRequest));
 router.get('/decisions',isloggedin,catchAsync(yourfriends.decision));
 router.get('/removeFriend',isloggedin,catchAsync(yourfriends.removeFriends));
 router.get('/feeds',isloggedin,catchAsync(yourfriends.seefeeds));
+router.get('/secrets',isloggedin,catchAsync(yourfriends.secrets));
 
 module.exports = router;

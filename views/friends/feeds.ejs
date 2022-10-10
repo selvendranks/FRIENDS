@@ -25,11 +25,8 @@
                                 <div class="carousel-inner">
                                     <% post.image.forEach((img,i)=> { %>
                                         <div class="carousel-item <%= i===0 ? 'active' : '' %> ">
-                                            <% let text=img.url %>
-                                                <% let array=text.split("upload") %>
-                                                    <% let image=array[0]+"upload/q_50"+array[1] %>
-                                                        <% console.log(image) %>
-                                                            <img src="<%= image %>" class="d-block w-100" alt="...">
+                                         
+                                                            <img src="<%= img.url %>" class="d-block w-100" alt="...">
                                         </div>
                                         <% }) %>
 
@@ -103,9 +100,11 @@
                                                         </b> : <%= review.body %>
                                                             <% if(review.author==currentUser.username) {%>
                                                                 <a class="material-symbols-outlined"
-                                                                    style="text-decoration: none;" id='deleteComment' data-profile="<%= profile.id %>" data-post="<%= post.id %>" data-review="<%=review.id%>"
-                                                                    >delete_forever</a>
-                                                                
+                                                                    style="text-decoration: none;" id='deleteComment'
+                                                                    data-profile="<%= profile.id %>"
+                                                                    data-post="<%= post.id %>"
+                                                                    data-review="<%=review.id%>">delete_forever</a>
+
                                                     </p>
 
                                                     <% } }} else{ %>
@@ -126,6 +125,8 @@
         let likes = document.querySelectorAll("#like")
         let comments = document.querySelectorAll("#addComment")
         let commentItems = document.querySelectorAll("#deleteComment")
+        // let images = document.querySelectorAll('img');
+
         deleteItems()
         for (let like of likes) {
 
@@ -160,8 +161,8 @@
                 }).then((res) => {
                     return res.json()
                 }).then((post) => {
-                     
-                    justComment = post.reviews[post.reviews.length -1]
+
+                    justComment = post.reviews[post.reviews.length - 1]
                     let lists = comment.parentElement.parentElement.querySelector("#commentList").querySelector('div')
                     console.log(lists)
                     console.log(post)
@@ -177,18 +178,18 @@
                     commentItems = document.querySelectorAll("#deleteComment")
                     console.log(commentItems)
                     comment.querySelector('textarea').value = ""
-                 
-                try{
-                    if(post.reviews.length ==0){
-                        comment.parentElement.parentElement.querySelector("#commentList").querySelector('#no-comments').textContent = "no comments yet"
+
+                    try {
+                        if (post.reviews.length == 0) {
+                            comment.parentElement.parentElement.querySelector("#commentList").querySelector('#no-comments').textContent = "no comments yet"
+                        }
+                        else {
+                            comment.parentElement.parentElement.querySelector("#commentList").querySelector('#no-comments').textContent = ""
+                        }
                     }
-                    else{
-                        comment.parentElement.parentElement.querySelector("#commentList").querySelector('#no-comments').textContent = ""
+                    catch (e) {
+                        console.log(e);
                     }
-                }
-                catch(e){
-                    console.log(e);
-                }
 
                     deleteItems()
                 })
@@ -203,26 +204,26 @@
 
             })
         }
-        
-  function deleteItems(){
-        for(let commentItem of commentItems){
-            console.log(commentItem)
-            commentItem.addEventListener('click',(event)=>{
-                commentItem.classList.add('deleteCommentNow')
-                fetch(`/friends/${commentItem.dataset.profile}/post/${commentItem.dataset.post}/deletecomment/${commentItem.dataset.review}`)
-            
-                .then((respose) => {
-                        return respose.json()
-                    }).then((data) => {
-                        console.log(data)
-                        commentItem.parentNode.remove()
-                    })
-            })
+
+        function deleteItems() {
+            for (let commentItem of commentItems) {
+                console.log(commentItem)
+                commentItem.addEventListener('click', (event) => {
+                    commentItem.classList.add('deleteCommentNow')
+                    fetch(`/friends/${commentItem.dataset.profile}/post/${commentItem.dataset.post}/deletecomment/${commentItem.dataset.review}`)
+
+                        .then((respose) => {
+                            return respose.json()
+                        }).then((data) => {
+                            console.log(data)
+                            commentItem.parentNode.remove()
+                        })
+                })
+            }
         }
-    }
 
 
-            // "/friends/profile.id/post/post.id/like"
+
 
     </script>
 
@@ -264,27 +265,37 @@
             color: red;
         }
 
-        #deleteComment:hover{
-             cursor: pointer;
+        #deleteComment:hover {
+            cursor: pointer;
         }
 
-        .deleteCommentNow{
+        .deleteCommentNow {
             -webkit-animation: spin 1.3s linear infinite;
         }
 
-        .addCommentNow{
+        .addCommentNow {
             -webkit-animation: spin 1.3s linear infinite;
         }
 
         @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
 
         /*  Helper Styles */

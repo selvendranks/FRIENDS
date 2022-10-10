@@ -38,4 +38,7 @@ router.route("/test").get(catchAsync(users.rendertestform));
 
 
 router.get("/logout", users.logoutUser);
+
+
+
 module.exports = router;

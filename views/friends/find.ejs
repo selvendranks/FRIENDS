@@ -11,11 +11,7 @@
      
     <%for(let prof of profiles ){ if(prof.username!=currentUser.username){%>
         <div class="card m-2 d-inline-block" style="width: 20rem; "> 
-          <% let text = prof.image.url %>
-         <% let array = text.split("upload") %>
-        <% let image = array[0]+"upload/q_50"+array[1] %>  
-         <% console.log(image) %> 
-            <img src=<%= image %>  class="card-img-top"  style='max-height: 350px' alt="...">
+            <img src=<%= prof.image.url %>  class="card-img-top"  style='max-height: 350px' alt="...">
             <div class="card-body">
                 <h4 class="card-title">
                     <%= prof.username %>

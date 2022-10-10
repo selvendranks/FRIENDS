@@ -21,8 +21,23 @@ module.exports.addPost = async(req,res)=>{
     const profile = await Profile.findById(id);
     const post = new Post(req.body.Post);
     post.author = req.user._id;
+    let result = await cloudinary.api.resources();
 
-    const imgs =   req.files.map(f=>({ url:f.path , filename:f.filename }));
+    const imgs =   req.files.map(f=>{
+    let percent =0;
+       
+    result = result.resources.find((item) => item.secure_url === f.path)
+    let dimension = +result.bytes
+    // res.send(`${dimension}`)
+   if(dimension>50000)
+      percent = (100/(dimension/50000)).toFixed(0)
+    else percent = 99;
+    
+    let array = f.path.split('upload');
+    image=array[0]+`upload/q_${percent}`+array[1]
+
+    // res.send(`${image}`)
+       return { url:image , filename:f.filename }});
     post.image.push(...imgs);
     profile.posts.push(post);
     await post.save();

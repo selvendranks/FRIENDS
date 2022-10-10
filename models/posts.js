@@ -5,7 +5,7 @@ const postSchema = new Schema({
   image: [
     {
       url: String,
-      filename: String,
+      filename: String
     },
   ],
   title: {

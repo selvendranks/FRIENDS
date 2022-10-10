@@ -29,8 +29,10 @@ module.exports.addPost = async(req,res)=>{
     result = result.resources.find((item) => item.secure_url === f.path)
     let dimension = +result.bytes
     // res.send(`${dimension}`)
-   if(dimension>50000)
+   if(dimension>50000){
       percent = (100/(dimension/50000)).toFixed(0)
+      if(percent<6)
+      percent = 6;}
     else percent = 99;
     
     let array = f.path.split('upload');

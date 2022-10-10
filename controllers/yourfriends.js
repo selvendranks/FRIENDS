@@ -137,15 +137,16 @@ module.exports.decision = async (req, res) => {
 module.exports.showFriends = async (req, res) => {
   const profile = await Profile.findOne({ username: req.user.username });
 
-  const friends = [];
+  let friends = [];
   if (profile.friends.length > 0) {
     for (prof of profile.friends) {
       var buddies = await Profile.findOne({ username: prof });
       friends.push(buddies);
     }
   }
-
-  res.render("friends/friends.ejs", { friends });
+  
+  // res.send(friends)
+  res.render("friends/friends.ejs",  {friends} );
 };
 
 module.exports.removeFriends = async (req, res) => {

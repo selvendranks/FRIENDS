@@ -83,11 +83,11 @@ module.exports.generateOtptoRegister = async(req,res)=>{
 
 
   const mailData = {
-    from: process.env.EMAIL,  // sender address
+    from: "Friends+ Team",  // sender address
       to: `${body}`,   // list of receivers
       subject: 'Email verification otp',
       text: 'your otp',
-      html: `your OTP : ${otp}. please dont share with anyone`
+      html: `<h1>Welocome to Friends+  ;)</h1>your OTP : <b>${otp}</b>. please dont share with anyone`
              
     };
 
@@ -95,7 +95,8 @@ module.exports.generateOtptoRegister = async(req,res)=>{
         if(err)
           throw new Error("Problem sending mail")
         else
-          {
+          { 
+            console.log(info);
             res.cookie('Otp', `${otp}`, { signed: true }) 
             res.json({'Otp':`:|`});
           }
@@ -132,11 +133,11 @@ module.exports.generateOtp = async(req,res)=>{
 
 
   const mailData = {
-    from: process.env.EMAIL,  // sender address
+    from: "Friends+ Team",  // sender address
       to: `${body}`,   // list of receivers
       subject: 'Reset Password OTL',
       text: 'your Link',
-      html: `<a href='https://murmuring-plateau-98800.herokuapp.com/forgotPassword/${randomOtp}'>Reset Your password</a>. please dont share the link with anyone`
+      html: `<h2>We missed you a lot. Welocome Back ;)</h2><b><a href='https://murmuring-plateau-98800.herokuapp.com/forgotPassword/${randomOtp}'>Reset Your password</a></b>. please dont share the link with anyone`
              
     };
 
@@ -144,7 +145,8 @@ module.exports.generateOtp = async(req,res)=>{
         if(err)
           console.log("###################################")
         else
-         res.json({"message":"it worked"});
+         {console.log(info);
+         res.json({"message":"it worked"});}
      });
 
   

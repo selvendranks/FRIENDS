@@ -83,7 +83,7 @@ module.exports.generateOtptoRegister = async(req,res)=>{
 
 
   const mailData = {
-    from: "Friends+ Team",  // sender address
+    from: process.env.EMAIL ,  // sender address
       to: `${body}`,   // list of receivers
       subject: 'Email verification otp',
       text: 'your otp',
@@ -133,7 +133,7 @@ module.exports.generateOtp = async(req,res)=>{
 
 
   const mailData = {
-    from: "Friends+ Team",  // sender address
+    from: process.env.EMAIL,  // sender address
       to: `${body}`,   // list of receivers
       subject: 'Reset Password OTL',
       text: 'your Link',

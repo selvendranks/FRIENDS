@@ -65,8 +65,8 @@ module.exports.addNewProfile = async (req, res) => {
   // res.send(`${dimension}`)
  if(dimension>150000){
     percent = (100/(dimension/150000)).toFixed(0)
-    if(percent<6)
-    percent = 6;}
+    if(percent<10)
+    percent = 10;}
   else percent = 99;
   
   let array = req.file.path.split('upload');

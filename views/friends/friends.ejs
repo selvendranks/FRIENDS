@@ -3,7 +3,7 @@
 <h2 class="d-inline-block">Friends: </h2>
 
 <ul>
-    <%for(let prof of friends ){%>
+    <%for(let prof of friends ){ if(prof){%>
     <div class="card m-2 d-inline-block" style="width: 17rem;"> 
         <img src=<%= prof.image.url %>  class="card-img-top" style='max-height: 350px' alt="...">
         <div class="card-body">
@@ -23,5 +23,5 @@
             </p>
         </div>
     </div>
-    <% } %> 
+    <% }} %> 
 </ul>

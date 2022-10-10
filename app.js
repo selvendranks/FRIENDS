@@ -5,8 +5,8 @@ console.log(process.env.SECRET)
 console.log(process.env.API_KEY)
 
 
-const port = process.env.PORT ;
-// const port = 5000;
+// const port = process.env.PORT ;
+const port = 5000;
 
 const express = require('express');
 const mongoose = require('mongoose');

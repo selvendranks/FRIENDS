@@ -23,7 +23,7 @@ module.exports.registerUser = async (req, res) => {
     req.flash("sucess", "Welcome to Friends+");
     res.redirect("/friends/new");
   } catch (e) {
-    req.flash("error", e.message);
+    req.flash("error", "Sorry the username or email has been already registered");
     res.redirect("/register");
   }
 };
@@ -59,10 +59,11 @@ module.exports.renderForgotPasswordForm = (req, res) => {
 module.exports.verifyMail = async(req,res)=>{
 
   const {body} = req.body;
-  if(req.signedCookies.Otp === body){
+  if(req.signedCookies.Otp  === body){
      res.json({"verified":"true"})
   }
   else{
+    
     res.json({"verified":"false"})
   }
 }
@@ -95,9 +96,10 @@ module.exports.generateOtptoRegister = async(req,res)=>{
         if(err)
           throw new Error("Problem sending mail")
         else
-          { 
+          { let tries =0;
             console.log(info);
-            res.cookie('Otp', `${otp}`, { signed: true }) 
+            res.cookie('Otp', `${otp}`, { signed: true })
+            res.cookie('Retries', `${tries}`)
             res.json({'Otp':`:|`});
           }
      });

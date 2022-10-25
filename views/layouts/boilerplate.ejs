@@ -50,12 +50,11 @@
     function setTheme(){
         let currentTheme = localStorage.getItem('theme')
         themeSelect.value = currentTheme
+        themeStylesheetLink.setAttribute('href',`/stylesheets/${currentTheme}.css`);
         if(!currentTheme){
             localStorage.setItem('theme','light')
-            currentTheme = 'light';
-            themeSelect.value = currentTheme
+            themeStylesheetLink.setAttribute('href',`/stylesheets/light.css`);
         }
-        themeStylesheetLink.setAttribute('href',`/stylesheets/${currentTheme}.css`);
         console.log(themeStylesheetLink.href)
     }
 

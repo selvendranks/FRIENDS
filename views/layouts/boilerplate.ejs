@@ -45,9 +45,7 @@
     function changeTheme(){
         currentTheme = `${themeSelect.value}`
         localStorage.setItem('theme',currentTheme)
-        
-        themeStylesheetLink.setAttribute('href',`/stylesheets/${themeSelect.value}.css`);
-        console.log(themeStylesheetLink.href)
+    
     }
     function setTheme(){
         let currentTheme = localStorage.getItem('theme')

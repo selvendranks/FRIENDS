@@ -38,7 +38,7 @@
 
  
   <script>
-      let currentTheme = localStorage.getItem('theme') || 'Light'
+      let currentTheme = localStorage.getItem('theme')
       const themeSelect = document.querySelector('#themeSelector');
       const themeStylesheetLink = document.querySelector("#themeLink");
       console.log(themeStylesheetLink.href)
@@ -52,6 +52,11 @@
     function setTheme(){
         let currentTheme = localStorage.getItem('theme')
         themeSelect.value = currentTheme
+        if(!currentTheme){
+            localStorage.setItem('theme','Light')
+            currentTheme = 'Light';
+            themeSelect.value = currentTheme
+        }
         themeStylesheetLink.setAttribute('href',`/stylesheets/${currentTheme}.css`);
         console.log(themeStylesheetLink.href)
     }

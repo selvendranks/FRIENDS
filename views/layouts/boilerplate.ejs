@@ -18,9 +18,7 @@
 </head>
 
 <body class="d-flex flex-column vh-100">
-   <script>
-    localStorage.setItem('theme','Light')
-   </script>
+  
     <%- include('../partials/navbar') %>
         <main class="container mt-3">
     <%- include('../partials/flash') %> 
@@ -40,7 +38,7 @@
 
  
   <script>
-      let currentTheme = localStorage.getItem('theme')
+      let currentTheme = localStorage.getItem('theme') || 'Light'
       const themeSelect = document.querySelector('#themeSelector');
       const themeStylesheetLink = document.querySelector("#themeLink");
       console.log(themeStylesheetLink.href)

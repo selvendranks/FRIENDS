@@ -53,8 +53,8 @@
         let currentTheme = localStorage.getItem('theme')
         themeSelect.value = currentTheme
         if(!currentTheme){
-            localStorage.setItem('theme','Light')
-            currentTheme = 'Light';
+            localStorage.setItem('theme','light')
+            currentTheme = 'light';
             themeSelect.value = currentTheme
         }
         themeStylesheetLink.setAttribute('href',`/stylesheets/${currentTheme}.css`);

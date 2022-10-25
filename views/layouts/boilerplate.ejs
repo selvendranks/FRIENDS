@@ -54,6 +54,7 @@
         if(!currentTheme){
             localStorage.setItem('theme','light')
             themeStylesheetLink.setAttribute('href',`/stylesheets/light.css`);
+            themeSelect.value = 'light'
         }
         console.log(themeStylesheetLink.href)
     }

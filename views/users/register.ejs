@@ -9,58 +9,75 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <h1>Register</h1>
     <div class="row">
-        <div class="col-md-6">
-            <form action="/register" method="post" name="register" class="validated" id="registerForm">
-                <div class="mb-1 input-group-sm">
-                    <label class="form-label">UserName</label>
-                    <input type="text" class="form-control" name="username" required>
-                    <div class="invalid-feedback">
-                        Required
-                    </div>
+        <div class="col-md-6 mx-auto">
+            <div class="card bg-earth register-card">
+                <div class="card-header">
+                    <h1>Register</h1>
                 </div>
-                <div class="mb-1 input-group-sm">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" required>
-                    <div class="invalid-feedback">
-                        Required
-                    </div>
-                </div>
-                <div class="mb-1 input-group-sm">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" required>
-                    <div class="invalid-feedback">
-                        Required
-                    </div>
-                </div>
+                <div class="card-body">
+                    <form action="/register" method="post" name="register" class="validated" id="registerForm">
+                        <div class="mb-1 input-group-sm">
+                            <label class="form-label">UserName</label>
+                            <input type="text" class="form-control" name="username" required>
+                            <div class="invalid-feedback">
+                                Required
+                            </div>
+                        </div>
+                        <div class="mb-1 input-group-sm">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" required>
+                            <div class="invalid-feedback">
+                                Required
+                            </div>
+                        </div>
+                        <div class="mb-1 input-group-sm">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                            <div class="invalid-feedback">
+                                Required
+                            </div>
+                        </div>
 
-                <button class="btn btn-success mt-1" id="sendOTP"><span class="material-symbols-outlined" id="registerIcon" style=" position: relative; top: 0.3rem;">
-                    how_to_reg
-                    </span>Register</button>
-                <p>User already? <a href="/login">Login</a></p>
+                        <button class="btn btn-success mt-1" id="sendOTP"><span class="material-symbols-outlined"
+                                id="registerIcon" style=" position: relative; top: 0.3rem;">
+                                how_to_reg
+                            </span>Register</button>
+                        <p>User already? <a href="/login">Login</a></p>
 
-            </form>
-          
-
-            <form action="/verifyEmail" method="post" class="validated" id="otpForm">
-                <div class="mb-1 input-group-sm">
-                    <label class="form-label">
-                        Enter the OTP
-                    </label>
-                    <input type="text" class="form-control" name="otp" id="otp" required>
-                    <div class="invalid-feedback">
-                        something is'nt right
-                    </div>
+                    </form>
                 </div>
-                <button class="btn btn-primary mt-1"><span class="material-symbols-outlined" style=" position: relative; top: 0.3rem;" id="checkIcon">
-                    task_alt
-                    </span>Verify Otp</button>
-            </form>
+            </div>
+
+            <div class="card bg-earth otp-card">
+                <div class="card-header">
+                    <h4>verify</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/verifyEmail" method="post" class="validated" id="otpForm">
+                        <div class="mb-1 input-group-sm">
+                            <label class="form-label">
+                                Enter the OTP
+                            </label>
+                            <input type="text" class="form-control" name="otp" id="otp" required>
+                            <div class="invalid-feedback">
+                                something is'nt right
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-1"><span class="material-symbols-outlined"
+                                style=" position: relative; top: 0.3rem;" id="checkIcon">
+                                task_alt
+                            </span>Verify Otp</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
+
     <script>
+        const OtpCard = document.querySelector(".otp-card")
+        const RegisterCard = document.querySelector('.register-card')
         const registerForm = document.querySelector('#registerForm');
         const Alert = document.querySelector('#alert-success');
         const AlertWar = document.querySelector('#alert-danger');
@@ -69,7 +86,7 @@
         const checkIcon = document.querySelector("#checkIcon");
 
         let otpForm = document.querySelector('#otpForm');
-        otpForm.style.display = 'none';
+        OtpCard.style.display = 'none';
         AlertWar.style.display = 'none';
 
         let OTP = ''
@@ -88,10 +105,10 @@
             }).then((res) => {
                 return res.json()
             }).then((post) => {
-                
+
                 registerIcon.classList.remove("registerIcon");
-                otpForm.style.display = 'block';
-                registerForm.style.display = 'none';
+                OtpCard.style.display = 'block';
+                RegisterCard.style.display = 'none';
                 Alert.style.display = 'block'
                 registerButton.style.display = 'none'
                 AlertWar.style.display = 'none';
@@ -121,9 +138,9 @@
                             checkIcon.classList.remove('checkIcon');
                             AlertWar.style.display = 'block';
 
-                            setTimeout(()=>{
+                            setTimeout(() => {
                                 location.reload()
-                            },2500)
+                            }, 2500)
                         }
                     })
 
@@ -136,19 +153,29 @@
 
     </script>
 
-<style>
+    <style>
+        .registerIcon,
+        .checkIcon {
+            -webkit-animation: spin 1.3s linear infinite;
+        }
 
-    .registerIcon,.checkIcon{
-                -webkit-animation: spin 1.3s linear infinite;
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
             }
-    
-            @-webkit-keyframes spin {
-      0% { -webkit-transform: rotate(0deg); }
-      100% { -webkit-transform: rotate(360deg); }
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>

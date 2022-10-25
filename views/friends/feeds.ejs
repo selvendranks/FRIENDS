@@ -5,7 +5,7 @@
         <h2>Feeds: </h2>
         <% for(let profile of Profile){%>
             <%for (let post of profile.posts){%>
-                <div class="card m-2 d-inline-block" id="postwidth">
+                <div class="card m-2 d-inline-block bg-earth" id="postwidth">
 
                     <h6>By : <a style="text-decoration: none" href="/friends/<%= profile._id %>">
                             <%=profile.username%>

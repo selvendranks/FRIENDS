@@ -1,70 +1,84 @@
 <%layout('layouts/boilerplate') %>
-    <div class="row">
-        <div class="col-md-6 offset-md-3" >
-            <p class="h1">Tell us about you</p>
-            <form action="/friends" method="POST" novalidate class="validated" enctype="multipart/form-data">
-               
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card bg-earth">
+        <div class="card-header">
+          <h1>Tell us about you</h1>
+        </div>
+        <div class="card-body">
+          <form action="/friends" method="POST" novalidate class="validated" enctype="multipart/form-data">
 
-                <div class="mb-1 input-group-sm">
-                    <label class="form-label"><b>Description :</b></label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="Profile[description]"></textarea>
-                    <div class="invalid-feedback">
-                        Required
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="form-label"><b>Visibility :</b></label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" value="private" name="Profile[visibilty]" id="flexRadioDefault1" checked>
-                        <label class="form-check-label" for="flexRadioDefault1">
-                          Private
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" value="public" name="Profile[visibilty]" id="flexRadioDefault2" >
-                        <label class="form-check-label" for="flexRadioDefault2">
-                          Public
-                        </label>
-                      </div>
-                </div>
-                <div>
-                    <label class="form-label"><b>Gender :</b></label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" value="male" name="Profile[Gender]" id="flexRadioDefault1" checked>
-                        <label class="form-check-label" for="flexRadioDefault1">
-                          Male
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" value="female" name="Profile[Gender]" id="flexRadioDefault2" >
-                        <label class="form-check-label" for="flexRadioDefault2">
-                          Female
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" value="others" name="Profile[Gender]" id="flexRadioDefault3" >
-                        <label class="form-check-label" for="flexRadioDefault3">
-                          Others
-                        </label>
-                      </div>
-                </div>
-                
 
-                <div class="mb-3">
-                    <label for="formFileSm" class="form-label"><b>Upload images :</b></label>
-                    <input class="form-control form-control-sm" id="formFileSm" type="file" name="Profile[image]" single required>
-                </div>
+            <div class="mb-1 input-group-sm">
+              <label class="form-label"><b>Description :</b></label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                name="Profile[description]"></textarea>
+              <div class="invalid-feedback">
+                Required
+              </div>
+            </div>
 
-                <div class="mb-1 input-group-sm">
-                    <label class="form-label"><b>Date of Birth :</b></label>
-                    <input type="date" class="form-control" min="<%= new Date().toJSON().slice(0,10).replace(/-/g,'-') %> " name="Profile[dateOfBirth]" required>
-                    <div class="invalid-feedback">
-                        Required
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-info mb-2">Add profile</button>
+            <div>
+              <label class="form-label"><b>Visibility :</b></label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="private" name="Profile[visibilty]"
+                  id="flexRadioDefault1" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Private
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="public" name="Profile[visibilty]"
+                  id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Public
+                </label>
+              </div>
+            </div>
+            <div>
+              <label class="form-label"><b>Gender :</b></label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="male" name="Profile[Gender]" id="flexRadioDefault1"
+                  checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Male
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="female" name="Profile[Gender]"
+                  id="flexRadioDefault2">
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Female
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" value="others" name="Profile[Gender]"
+                  id="flexRadioDefault3">
+                <label class="form-check-label" for="flexRadioDefault3">
+                  Others
+                </label>
+              </div>
+            </div>
 
-</form>
-</div>
-</div>
+
+            <div class="mb-3">
+              <label for="formFileSm" class="form-label"><b>Upload images :</b></label>
+              <input class="form-control form-control-sm" id="formFileSm" type="file" name="Profile[image]" single
+                required>
+            </div>
+
+            <div class="mb-1 input-group-sm">
+              <label class="form-label"><b>Date of Birth :</b></label>
+              <input type="date" class="form-control" min="<%= new Date().toJSON().slice(0,10).replace(/-/g,'-') %> "
+                name="Profile[dateOfBirth]" required>
+              <div class="invalid-feedback">
+                Required
+              </div>
+            </div>
+            <button type="submit" class="btn btn-info mb-2">Add profile</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

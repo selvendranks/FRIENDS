@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" >
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-nav-color .sun-color sticky-top" >
   <div class="container-fluid">
     <a class="navbar-brand" href="#">FRIENDS+</a>
     <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -51,7 +52,14 @@
           <% } %> 
         </li>
 
-
+        <li class="nav-item dropdown">
+          <select class="form-select" id="themeSelector" aria-label="Default select example">
+            <option value="light">Light</option>
+            <option value="DarkNeon">DarkNeon</option>
+            <option value="Earth">Earth</option>
+            <option value="Sunset">Sunset</option>
+          </select>
+        </li>
 
       </ul>
       <ul class="navbar-nav ms-auto">
@@ -72,3 +80,41 @@
     </div>
   </div>
 </nav>
+
+<script>
+   let selectedTheme = document.querySelector('#themeSelector')
+   let navbar = document.querySelector('.navbar')
+   let theme = ''
+
+   function changeNavTheme(){
+    console.log(selectedTheme.value)
+    if(selectedTheme.value === 'Sunset'){
+    console.log("sunset")
+    navbar.classList.remove('navbar-dark')
+    navbar.classList.add('navbar-light')
+    }
+    else{
+      navbar.classList.remove('navbar-light')
+    navbar.classList.add('navbar-dark')
+    }
+   }
+
+   function changeNavThemeRefresh(){
+    console.log(selectedTheme.value)
+    if(localStorage.getItem('theme') === 'Sunset'){
+    console.log("sunset")
+    navbar.classList.remove('navbar-dark')
+    navbar.classList.add('navbar-light')
+    }
+    else{
+      navbar.classList.remove('navbar-light')
+    navbar.classList.add('navbar-dark')
+    }
+   }
+
+   changeNavThemeRefresh()
+   selectedTheme.addEventListener('change',()=>{
+     changeNavTheme()
+   })
+   
+</script>

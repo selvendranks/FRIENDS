@@ -1,0 +1,25 @@
+.bg-earth{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    background: radial-gradient( circle farthest-corner at 83.7% 4.3%,  rgba(173,0,171,0.8) 0%, rgba(15,51,92,0.8) 90% );  
+}
+
+
+body {
+    color: white;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)),
+    url("https://res.cloudinary.com/dwg9vpib6/image/upload/v1666673487/wallpaperflare.com_wallpaper_fep9jn.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* .bg-nav-color{
+    background: rgba(39, 9, 64, 0.888);
+} */
+
+.bg-nav-color {
+    
+    color: black;
+    background: radial-gradient( circle 597px at 93% 9.8%, rgba(39, 9, 64, 0.888) 1.7%, rgba(39, 9, 64, 0.888) 97% );
+}

@@ -50,7 +50,7 @@ const sessionConfig = {
     saveUninitialized:true ,
     cookie:{
         httpOnly : true,
-        expires: Date.now() + 1000*60*60*24, //expires in a day
+        expires: Date.now() + 24*60*60, //expires in a day
     },
     store:MongoStore.create({
         

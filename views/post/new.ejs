@@ -14,14 +14,14 @@
                 </div>
                 <div class="mb-1 input-group-sm">
                     <label class="form-label">Title</label>
-                    <input type="text" class="form-control" name="Post[title]" required>
+                    <input type="text" class="form-control" name="Post[title]" maxlength="40" required>
                     <div class="invalid-feedback">
                         Required
                     </div>
                 </div>
                 <div class="mb-1 input-group-sm">
                     <label class="form-label">Description</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="150"
                         name="Post[description]"></textarea>
                     <div class="invalid-feedback">
                         Required

@@ -93,7 +93,7 @@ module.exports.generateOtptoRegister = async(req,res)=>{
     };
 
     transporter.sendMail(mailData, function (err, info) {
-        if(err)
+        if(err) 
           throw new Error("Problem sending mail")
         else
           { let tries =0;

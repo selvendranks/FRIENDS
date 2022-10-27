@@ -88,7 +88,7 @@ module.exports.generateOtptoRegister = async(req,res)=>{
       to: `${body}`,   // list of receivers
       subject: 'Email verification otp',
       text: 'your otp',
-      html: `<h1>Welocome to Friends+  ;)</h1>your OTP : <b>${otp}</b>. please dont share with anyone`
+      html: `<h1>Welocome to Friends+  ;)</h1>your OTP : <p style="font-size:40px;color:blue;">${otp}</p>. please dont share with anyone`
              
     };
 

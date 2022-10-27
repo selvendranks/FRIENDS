@@ -1,7 +1,11 @@
 <%layout('layouts/boilerplate') %>
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <p class="h2">New Post</p>
+            <div class="card bg-earth">
+                <div class="card-header">
+                  <h1>New Post</h1>
+                </div>
+                <div class="card-body">
             <form action="/friends/<%= profile._id %>/post" method="POST" novalidate class="validated"
                 enctype="multipart/form-data">
                 <div class="mb-3">
@@ -26,4 +30,8 @@
                 <button type="submit" class="btn btn-success mb-2">Add post</button>
             </form>
         </div>
+        </div>
+        </div>
+        </div>
+    
     </div>

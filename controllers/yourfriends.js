@@ -225,7 +225,7 @@ module.exports.seefeeds = async (req, res) => {
       },
     })
     .populate("author");
-  console.log(profile);
+  // console.log(profile);
 
   // profile = shuffle(profile);
   let profile = []

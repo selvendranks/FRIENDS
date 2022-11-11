@@ -199,15 +199,16 @@ module.exports.seefeeds = async (req, res) => {
 
   ////////////////////////////////searching friends
   const yourprofile = await Profile.findOne({ username: req.user.username });
-  const friends = yourprofile.friends;
+  const friends = shuffle(yourprofile.friends);
 
   ///////////////////////////////searching for public accounts
   const publicprofile = await Profile.find({ visibilty: "public" });
-  const publicaccount = publicprofile.map((x) => x.username);
+  const publicaccount = shuffle(publicprofile.map((x) => x.username));
 
   //////////////////////////////combining the usernames for feed and remove duplicates
 
   const feedProfile = [...new Set(friends.concat(publicaccount))];
+
   const index = feedProfile.indexOf(req.user.username);
   if (index > -1) {
     feedProfile.splice(index, 1); // 2nd parameter means remove one item only
@@ -226,7 +227,7 @@ module.exports.seefeeds = async (req, res) => {
     .populate("author");
   console.log(profile);
 
-  profile = shuffle(profile);
+  // profile = shuffle(profile);
   
   res.render('friends/feeds.ejs',{Profile : profile})
 };

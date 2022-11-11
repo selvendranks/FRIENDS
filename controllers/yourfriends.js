@@ -29,8 +29,9 @@ module.exports.showPeople = async (req, res) => {
     "******************************************************************"
   );
   console.log(profiles);
+
   let profiles = []
-  for(let i in profileS){
+  for(let i of profileS){
     profiles.unshift(i);
   }
   console.log(

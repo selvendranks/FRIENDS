@@ -83,7 +83,7 @@ module.exports.friendRequest = async (req, res) => {
   if (profile.friendRequest.length > 0) {
     for (prof of profile.friendRequest) {
       var requests = await Profile.findOne({ username: prof });
-      friendRequests.push(requests);
+      friendRequests.unshift(requests);
     }
   }
 
@@ -141,7 +141,7 @@ module.exports.showFriends = async (req, res) => {
   if (profile.friends.length > 0) {
     for (prof of profile.friends) {
       var buddies = await Profile.findOne({ username: prof });
-      friends.push(buddies);
+      friends.unshift(buddies);
     }
   }
   

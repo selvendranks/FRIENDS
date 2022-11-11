@@ -41,7 +41,7 @@ module.exports.addPost = async(req,res)=>{
     // res.send(`${image}`)
        return { url:image , filename:f.filename }});
     post.image.push(...imgs);
-    profile.posts.unshift(post);
+    profile.posts.push(post);
     await post.save();
     await profile.save();
 

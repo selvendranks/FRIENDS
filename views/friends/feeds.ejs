@@ -1,11 +1,9 @@
 <%layout('layouts/boilerplate') %>
 
 
-
-
     <div class="row">
-        <h2>Feeds: </h2> 
-        <% var pgno = 1;function paginate(array, page_size, page_number) {return array.slice((page_number - 1) * page_size, page_number * page_size); }for(let profile of paginate(Profile,2,pgno)){%>
+        <h2>Feeds: </h2>
+        <% for(let profile of Profile){%>
             <%for (let post of profile.posts){%>
                 <div class="card m-2 d-inline-block bg-earth" id="postwidth">
 
@@ -65,7 +63,7 @@
                                                         method="post">
                                                         <label class="form-label" for="review">Add
                                                             Review:</label>
-                                                        <textarea class="form-control mb-1" name="body" id="review" maxlength="150"
+                                                        <textarea class="form-control mb-1" name="body" id="review"
                                                             cols="3" rows="2" required></textarea>
                                                         <button class="btn-sm btn-secondary"
                                                             data-profile="<%=profile.id %>"
@@ -122,9 +120,7 @@
                 <% } %>
                     <% } %>
     </div>
-    <script>
-        console.log(pgno)
-    </script>
+
     <script>
         let likes = document.querySelectorAll("#like")
         let comments = document.querySelectorAll("#addComment")

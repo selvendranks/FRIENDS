@@ -199,11 +199,11 @@ module.exports.seefeeds = async (req, res) => {
 
   ////////////////////////////////searching friends
   const yourprofile = await Profile.findOne({ username: req.user.username });
-  const friends = shuffle(yourprofile.friends);
+  const friends = yourprofile.friends;
 
   ///////////////////////////////searching for public accounts
   const publicprofile = await Profile.find({ visibilty: "public" });
-  const publicaccount = shuffle(publicprofile.map((x) => x.username));
+  const publicaccount = publicprofile.map((x) => x.username);
 
   //////////////////////////////combining the usernames for feed and remove duplicates
 

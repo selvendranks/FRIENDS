@@ -24,16 +24,16 @@ module.exports.findPeople = async (req, res) => {
 
 module.exports.showPeople = async (req, res) => {
   const pattern = req.query.search;
-  const profiles = await Profile.find({ username: { $regex: pattern } });
+  const profileS = await Profile.find({ username: { $regex: pattern } });
   console.log(
     "******************************************************************"
   );
-  console.log(profiles);
+  
 
-  // let profiles = []
-  // for(let i of profileS){
-  //   profiles.unshift(i);
-  // }
+  let profiles = []
+  for(let i of profileS){
+    profiles.unshift(i);
+  }
   console.log(
     "******************************************************************"
   );

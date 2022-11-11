@@ -214,7 +214,7 @@ module.exports.seefeeds = async (req, res) => {
     feedProfile.splice(index, 1); // 2nd parameter means remove one item only
   }
 
-  var profile = await Profile.find({ username: { $in: feedProfile } })
+  var profileS = await Profile.find({ username: { $in: feedProfile } })
     .populate({
       path: "posts",
       populate: {
@@ -228,6 +228,10 @@ module.exports.seefeeds = async (req, res) => {
   console.log(profile);
 
   // profile = shuffle(profile);
+  let profile = []
+  for(let i of profileS){
+    profile.unshift(i);
+  }
   
   res.render('friends/feeds.ejs',{Profile : profile})
 };

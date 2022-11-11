@@ -223,8 +223,6 @@ module.exports.seefeeds = async (req, res) => {
 
   profile = shuffle(profile);
   
-
-
   res.render('friends/feeds.ejs',{Profile : profile})
 };
 

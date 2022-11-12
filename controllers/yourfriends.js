@@ -256,7 +256,7 @@ if(req.cookies.filter === 'publicR'){
   })
   .populate("author");
 
-  profileS = shuffle(profileS);
+  // profileS = shuffle(profileS);
 }
   // console.log(profile);
   

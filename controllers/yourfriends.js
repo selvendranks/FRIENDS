@@ -261,13 +261,13 @@ if(req.cookies.filter === 'publicR'){
   // console.log(profile);
   
   // profile = shuffle(profile);
-  let profile = []
-  for(let i of profileS){
-    profile.unshift(i);
-  }
+  // let profile = []
+  // for(let i of profileS){
+  //   profile.unshift(i);
+  // }
 
   
-  // res.render('friends/feeds.ejs',{Profile : profile})
-  res.send(profile)
+  res.render('friends/feeds.ejs',{Profile : profileS})
+  // res.send(profile)
 };
 

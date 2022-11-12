@@ -215,21 +215,7 @@ module.exports.seefeeds = async (req, res) => {
 
 var profileS = 0;
 
-if(req.cookies.filter === 'publicL'){
-  profileS = await Profile.find({ username: { $in: feedProfile } }).sort({$natural:-1})
-    .populate({
-      path: "posts",
-      populate: {
-        path: "reviews",
-        populate: {
-          path: "author",
-        },
-      },
-    })
-    .populate("author");
-}
-
-else if(req.cookies.filter === 'publicR'){
+if(req.cookies.filter === 'public'){
   profileS = await Profile.find({ username: { $in: feedProfile } })
   .populate({
     path: "posts",
@@ -256,6 +242,8 @@ else{
     },
   })
   .populate("author");
+
+  profileS = shuffle(profileS);
 }
   // console.log(profile);
   
@@ -265,8 +253,19 @@ else{
     profile.push(i);
   }
 
-  
+  // profile.sort((a,b)=>(a.posts[0]['_id'] - b.posts[0]['_id']))
   res.render('friends/feeds.ejs',{Profile : profile})
   // res.send(profile)
+  // let profiles = []
+
+ 
+
+  // (prof.posts[0]['_id'])
+
+  // for(let prof of profile){
+  // profiles.push(prof.posts[0]['_id'])
+  // }
+  // res.send(profile)
+  // res.send()
 };
 

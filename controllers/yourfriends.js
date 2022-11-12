@@ -256,7 +256,7 @@ if(req.cookies.filter === 'publicR'){
   })
   .populate("author");
 
-  // profileS = shuffle(profileS);
+  profileS = shuffle(profileS);
 }
   // console.log(profile);
   
@@ -267,6 +267,7 @@ if(req.cookies.filter === 'publicR'){
   }
 
   
-  res.render('friends/feeds.ejs',{Profile : profile})
+  // res.render('friends/feeds.ejs',{Profile : profile})
+  res.send(profile)
 };
 

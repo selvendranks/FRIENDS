@@ -108,7 +108,7 @@ module.exports.addComment = async(req,res)=>{
     const {id,postid} = req.params;
   
 
-    const post = await Post.findOneAndUpdate({_id:postid},{$push:{reviews:{body:body,author:req.user.username}}},{new:true});
+    const post = await Post.findOneAndUpdate({_id:postid},{$push:{reviews:{$each:{body:body,author:req.user.username},$position:0}}},{new:true});
     
    
     

@@ -207,7 +207,7 @@
                                                                 <a class="material-symbols-outlined" style="text-decoration: none;" id="deleteComment" data-profile="${comment.dataset.profile}" data-post="${comment.dataset.post}" data-review="${justComment._id}">delete_forever</a>
                                                     `
                     comment.querySelector('span').classList.remove('addCommentNow');
-                    lists.append(para)
+                    lists.prepend(para)
                     commentItems = document.querySelectorAll("#deleteComment")
                     console.log(commentItems)
                     comment.querySelector('textarea').value = ""

@@ -139,7 +139,7 @@ module.exports.generateOtp = async(req,res)=>{
       to: `${body}`,   // list of receivers
       subject: 'Reset Password OTL',
       text: 'your Link',
-      html: `<h2>We missed you a lot. Welocome Back ;)</h2><b><a href='https://grumpy-rose-slippers.cyclic.app/forgotPassword/${randomOtp}'>Reset Your password</a></b>. please dont share the link with anyone`
+      html: `<h2>We missed you a lot. Welocome Back ;)</h2><b><a href='https://friends-tp1g.onrender.com/forgotPassword/${randomOtp}'>Reset Your password</a></b>. please dont share the link with anyone`
              
     };
 

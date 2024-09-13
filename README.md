@@ -1,6 +1,6 @@
 #### Friends+ is an online social media app which enables to create and edit profile and add posts. With privacy features you can set your visibility to private and public . Friend+ features grouping friends together. Friends+ also features likes and comments on the posts. The main focus of friends+ is to create multiple accounts and enjoy a shared friends with different interests. Enjoy quality time with your friends with friends+.
 
-https://murmuring-plateau-98800.herokuapp.com/
+https://friends-tp1g.onrender.com
 
 A complete end to end social media web app
 This app was developed with node.js
